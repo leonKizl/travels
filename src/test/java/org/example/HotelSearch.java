@@ -43,4 +43,28 @@ public class HotelSearch {
         Assert.assertEquals("Hyatt Regency Perth",hotelNames.get(3));
 
     }
+    @Test
+    public void searchHotelwithoutCity(){
+        WebDriver driver = WebDriverSelector.getDriver(WebDriverSelector.BrowserType.FIREFOX);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        driver.manage().window().maximize();
+        driver.get("http://www.kurs-selenium.pl/demo/");
+
+        driver.findElement(By.xpath("//input[@name = 'checkin']")).click();
+        driver.findElements(By.xpath("//td[@class='day ' and text()='26']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
+
+        driver.findElement(By.cssSelector("input[name*='checkout']")).click();
+        driver.findElements(By.xpath("//td[@class='day ' and text()='31']")).stream()
+                .filter(WebElement::isDisplayed)
+                .findFirst()
+                .ifPresent(WebElement::click);
+        driver.findElement(By.id("travellersInput")).click();
+        driver.findElement(By.id("adultPlusBtn")).click();
+        driver.findElement(By.id("childPlusBtn")).click();
+        driver.findElement(By.xpath("//button[text()=' Search']")).click();
+        Assert.assertTrue(driver.findElement(By.cssSelector("h2.text-center")).isDisplayed());
+        Assert.assertEquals(driver.findElement(By.cssSelector("h2.text-center")).getText(),"No Results Found");
+
+
+    }
 }
