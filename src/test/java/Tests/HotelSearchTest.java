@@ -1,10 +1,9 @@
-package org.example;
+package Tests;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.example.WebDriverSelector;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -12,13 +11,9 @@ import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class HotelSearch {
+public class HotelSearchTest extends BaseTest{
     @Test
     public void searchHotel(){
-        WebDriver driver = WebDriverSelector.getDriver(WebDriverSelector.BrowserType.EDGE);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
         driver.findElement(By.linkText("Search by Hotel or City Name")).click();
         driver.findElement(By.xpath("//div[@id='select2-drop']//input")).sendKeys("Dubai");
         driver.findElement(By.xpath("//span[text() = 'Dubai']")).click();
@@ -37,21 +32,17 @@ public class HotelSearch {
                 .collect(Collectors.toList());
         System.out.println(hotelNames.size());
         hotelNames.forEach(el-> System.out.println(el));
-        Assert.assertEquals("Jumeirah Beach Hotel",hotelNames.get(0));
-        Assert.assertEquals("Oasis Beach Tower",hotelNames.get(1));
-        Assert.assertEquals("Rose Rayhaan Rotana",hotelNames.get(2));
-        Assert.assertEquals("Hyatt Regency Perth",hotelNames.get(3));
+        Assert.assertEquals(hotelNames.get(0), "Jumeirah Beach Hotel");
+        Assert.assertEquals(hotelNames.get(1), "Oasis Beach Tower");
+        Assert.assertEquals(hotelNames.get(2), "Rose Rayhaan Rotana");
+        Assert.assertEquals(hotelNames.get(3), "Hyatt Regency Perth");
 
     }
     @Test
     public void searchHotelwithoutCity(){
-        WebDriver driver = WebDriverSelector.getDriver(WebDriverSelector.BrowserType.FIREFOX);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
 
         driver.findElement(By.xpath("//input[@name = 'checkin']")).click();
-        driver.findElements(By.xpath("//td[@class='day ' and text()='26']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
+        driver.findElements(By.xpath("//td[@class='day ' and text()='27']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
 
         driver.findElement(By.cssSelector("input[name*='checkout']")).click();
         driver.findElements(By.xpath("//td[@class='day ' and text()='31']")).stream()

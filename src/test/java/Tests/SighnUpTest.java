@@ -1,23 +1,25 @@
-package org.example;
+package Tests;
 
-import org.openqa.selenium.Alert;
+import org.example.WebDriverSelector;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class SighnUpTest {
+public class SighnUpTest extends BaseTest{
+
+
+
+
     @Test
     public void sighnUp(){
-        WebDriver driver = WebDriverSelector.getDriver(WebDriverSelector.BrowserType.CHROME);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
+
         driver.findElements(By.xpath("//li[@id='li_myaccount']/a")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         driver.findElements(By.xpath("//a[text()='  Sign Up']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         driver.findElement(By.name("firstname")).sendKeys("Leon");
@@ -38,10 +40,6 @@ public class SighnUpTest {
     }
     @Test
     public void emptyFormTest(){
-        WebDriver driver = WebDriverSelector.getDriver(WebDriverSelector.BrowserType.CHROME);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
         driver.findElements(By.xpath("//li[@id='li_myaccount']/a")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         driver.findElements(By.xpath("//a[text()='  Sign Up']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         driver.findElement(By.xpath("//button[text()=' Sign Up']")).click();
@@ -56,10 +54,6 @@ public class SighnUpTest {
     }
     @Test
     public void EmailIsInvalidTest(){
-        WebDriver driver = WebDriverSelector.getDriver(WebDriverSelector.BrowserType.CHROME);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
         driver.findElements(By.xpath("//li[@id='li_myaccount']/a")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         driver.findElements(By.xpath("//a[text()='  Sign Up']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         driver.findElement(By.name("firstname")).sendKeys("Leon");
