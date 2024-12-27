@@ -1,7 +1,6 @@
 package Pages;
 
-import model.User;
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,6 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SignUpPage {
+
+    private WebDriver driver;
     @FindBy(name = "firstname")
     private WebElement firstNameInput;
 
@@ -43,42 +44,42 @@ public class SignUpPage {
 
     public SignUpPage(WebDriver driver){
         PageFactory.initElements(driver,this);
+        this.driver = driver;
     }
 
-    public void setFirstName(String firstname){
+    public SignUpPage setFirstName(String firstname){
         firstNameInput.sendKeys(firstname);
+        return this;
     }
 
-    public void setLastName(String lastName){
+    public SignUpPage setLastName(String lastName){
         lastnameInput.sendKeys(lastName);
+        return this;
     }
 
-    public void setPhone(String phone){
+    public SignUpPage setPhone(String phone){
         phoneInput.sendKeys(phone);
+        return this;
     }
 
-    public void setEmail(String email){
+    public SignUpPage setEmail(String email){
         emailInput.sendKeys(email);
+        return this;
     }
 
-    public void setPassword(String password){
+    public SignUpPage setPassword(String password){
         passwordInput.sendKeys(password);
+        return this;
     }
 
-    public void setConfirmPassword(String password){
+    public SignUpPage setConfirmPassword(String password){
         confirmPasswordInput.sendKeys(password);
+        return this;
     }
 
-    public void SignUp(){
+    public LoggedUserPage SignUp(){
        signUpButton.click();
+       return new LoggedUserPage(driver);
     }
-    public void userSignUp(User user){
-        setFirstName(user.getFirstName());
-        setLastName(user.getLastName());
-        setPhone(user.getPhone());
-        setEmail(user.getEmail());
-        setPassword(user.getPassword());
-        setConfirmPassword(user.getPassword());
-        SignUp();
-    }
+
 }
