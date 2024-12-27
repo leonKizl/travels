@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 public class HotelSearchhPage {
     private WebDriver driver;
 
@@ -32,6 +34,12 @@ public class HotelSearchhPage {
 
     @FindBy(xpath = "//button[text()=' Search']")
     private WebElement searchButton;
+
+    @FindBy(xpath = "//li[@id='li_myaccount']/a")
+    private List<WebElement> myAccountLink;
+
+    @FindBy(xpath = "//a[text()='  Sign Up']")
+    private List<WebElement> signUpLink;
 
     public HotelSearchhPage(WebDriver driver){
         this.driver = driver;
@@ -65,4 +73,10 @@ public class HotelSearchhPage {
     public void performSearch(){
         searchButton.click();
     }
+
+    public void openSignUpForm(){
+        myAccountLink.stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
+        signUpLink.stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
+    }
+
 }

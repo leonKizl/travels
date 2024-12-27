@@ -1,5 +1,8 @@
 package Tests;
 
+import Pages.HotelSearchhPage;
+import Pages.LoggedUserPage;
+import Pages.SignUpPage;
 import org.example.WebDriverSelector;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -20,51 +23,48 @@ public class SighnUpTest extends BaseTest{
     @Test
     public void sighnUp(){
 
-        driver.findElements(By.xpath("//li[@id='li_myaccount']/a")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
-        driver.findElements(By.xpath("//a[text()='  Sign Up']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
-        driver.findElement(By.name("firstname")).sendKeys("Leon");
-        String lastName = "Testowski";
-        driver.findElement(By.name("lastname")).sendKeys(lastName);
-        driver.findElement(By.name("phone")).sendKeys("6663628");
+        HotelSearchhPage hotelSearchhPage = new HotelSearchhPage(driver);
+        hotelSearchhPage.openSignUpForm();
+        SignUpPage signUpPage = new SignUpPage(driver);
+        signUpPage.setFirstName("Peppa");
+        signUpPage.setLastName("Pig");
+        signUpPage.setPhone("6663628");
         String email = "Testowski" + (int) (Math.random() * 1000) + "@mail.ru";
-        driver.findElement(By.name("email")).sendKeys(email);
-        driver.findElement(By.name("password")).sendKeys("Testowanie!!!");
-        driver.findElement(By.name("confirmpassword")).sendKeys("Testowanie!!!");
-        driver.findElement(By.xpath("//button[text()=' Sign Up']")).click();
-        WebElement heading = driver.findElement(By.cssSelector("h3.RTL"));
-        Assert.assertTrue(heading.isDisplayed(),"Heading is displaying");
-        Assert.assertTrue(heading.getText().contains(lastName));
-        Assert.assertEquals(heading.getText(),"Hi, Leon Testowski");
+        signUpPage.setEmail(email);
+        signUpPage.setPassword("Testowanie!!!");
+        signUpPage.setConfirmPassword("Testowanie!!!");
+        signUpPage.SignUp();
+        LoggedUserPage loggedUserPage = new LoggedUserPage(driver);
+        Assert.assertEquals(loggedUserPage.getUserNameHeading(),"Hi, Peppa Pig");
 
 
     }
     @Test
     public void emptyFormTest(){
-        driver.findElements(By.xpath("//li[@id='li_myaccount']/a")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
-        driver.findElements(By.xpath("//a[text()='  Sign Up']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
-        driver.findElement(By.xpath("//button[text()=' Sign Up']")).click();
-        List<WebElement> alerts = driver.findElements(By.cssSelector("div.alert-danger > p"));
-        Assert.assertEquals(alerts.size(), 5);
-        Assert.assertEquals(alerts.get(0).getText(),"The Email field is required.");
-        Assert.assertEquals(alerts.get(1).getText(),"The Password field is required.");
-        Assert.assertEquals(alerts.get(2).getText(),"The Password field is required.");
-        Assert.assertEquals(alerts.get(3).getText(),"The First name field is required.");
-        Assert.assertEquals(alerts.get(4).getText(),"The Last Name field is required.");
+        HotelSearchhPage hotelSearchhPage = new HotelSearchhPage(driver);
+        hotelSearchhPage.openSignUpForm();
+        SignUpPage signUpPage = new SignUpPage(driver);
+        signUpPage.SignUp();
+
+        Assert.assertTrue(signUpPage.GetAlertsMessages().contains("The Email field is required."),"Email field");
+        Assert.assertTrue(signUpPage.GetAlertsMessages().contains("The Password field is required."),"Password field");
+        Assert.assertTrue(signUpPage.GetAlertsMessages().contains("The First name field is required."),"FirstName field");
+        Assert.assertTrue(signUpPage.GetAlertsMessages().contains("The Last Name field is required."),"LastName field");
+
 
     }
     @Test
     public void EmailIsInvalidTest(){
-        driver.findElements(By.xpath("//li[@id='li_myaccount']/a")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
-        driver.findElements(By.xpath("//a[text()='  Sign Up']")).stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
-        driver.findElement(By.name("firstname")).sendKeys("Leon");
-        String lastName = "Testowski";
-        driver.findElement(By.name("lastname")).sendKeys(lastName);
-        driver.findElement(By.name("phone")).sendKeys("6663628");
-        String email = "Testowski" + (int) (Math.random() * 1000) + "mail.ru";
-        driver.findElement(By.name("email")).sendKeys(email);
-        driver.findElement(By.name("password")).sendKeys("Testowanie!!!");
-        driver.findElement(By.name("confirmpassword")).sendKeys("Testowanie!!!");
-        driver.findElement(By.xpath("//button[text()=' Sign Up']")).click();
-        Assert.assertEquals(driver.findElement(By.cssSelector("div.alert > p")).getText(),"The Email field must contain a valid email address.");
+        HotelSearchhPage hotelSearchhPage = new HotelSearchhPage(driver);
+        hotelSearchhPage.openSignUpForm();
+        SignUpPage signUpPage = new SignUpPage(driver);
+        signUpPage.setFirstName("Leon");
+        signUpPage.setLastName("Testowski");
+        signUpPage.setPhone("889899");
+        signUpPage.setEmail("Email");
+        signUpPage.setPassword("Testowanie!!!");
+        signUpPage.setEmail("Testowanie!!!");
+        signUpPage.SignUp();
+        Assert.assertTrue(signUpPage.GetAlertsMessages().contains("The Email field must contain a valid email address."));
     }
 }
