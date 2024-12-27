@@ -35,44 +35,43 @@ public class SignUpPage {
     @FindBy(css = "div.alert-danger > p")
     private List<WebElement> alertsList;
 
-    public List<String> GetAlertsMessages(){
-        return alertsList.stream()
-                .map(el ->el.getText())
-                .collect(Collectors.toList());
+    public List<String> GetAlertsMessages() {
+        return alertsList.stream().map(el -> el.getText()).collect(Collectors.toList());
     }
 
-    public SignUpPage(WebDriver driver){
-        PageFactory.initElements(driver,this);
+    public SignUpPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
     }
 
-    public void setFirstName(String firstname){
+    public void setFirstName(String firstname) {
         firstNameInput.sendKeys(firstname);
     }
 
-    public void setLastName(String lastName){
+    public void setLastName(String lastName) {
         lastnameInput.sendKeys(lastName);
     }
 
-    public void setPhone(String phone){
+    public void setPhone(String phone) {
         phoneInput.sendKeys(phone);
     }
 
-    public void setEmail(String email){
+    public void setEmail(String email) {
         emailInput.sendKeys(email);
     }
 
-    public void setPassword(String password){
+    public void setPassword(String password) {
         passwordInput.sendKeys(password);
     }
 
-    public void setConfirmPassword(String password){
+    public void setConfirmPassword(String password) {
         confirmPasswordInput.sendKeys(password);
     }
 
-    public void SignUp(){
-       signUpButton.click();
+    public void SignUp() {
+        signUpButton.click();
     }
-    public void userSignUp(User user){
+
+    public void userSignUp(User user) {
         setFirstName(user.getFirstName());
         setLastName(user.getLastName());
         setPhone(user.getPhone());

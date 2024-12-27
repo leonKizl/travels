@@ -12,12 +12,12 @@ public class LoggedUserPage {
     @FindBy(css = "h3.RTL")
     private WebElement userNameHeading;
 
-    public String getUserNameHeading(){
-      return userNameHeading.getText();
+    public String getUserNameHeading() {
+        return userNameHeading.getText();
     }
 
 
-    public LoggedUserPage(WebDriver driver){
-        PageFactory.initElements(driver,this);
+    public LoggedUserPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
     }
 }

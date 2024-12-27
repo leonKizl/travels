@@ -17,12 +17,12 @@ public class HotelsResultPage {
     @FindBy(css = "h2.text-center")
     public WebElement noHotelsHeading;
 
-    public HotelsResultPage(WebDriver driver){
-        PageFactory.initElements(driver,this);
+    public HotelsResultPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
 
     }
 
-    public List<String > getHotelsNames(){
+    public List<String> getHotelsNames() {
         return hotelsList.stream().map(el -> el.getAttribute("textContent")).collect(Collectors.toList());
     }
 }

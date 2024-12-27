@@ -1,4 +1,4 @@
-package org.example;
+package Utils;
 
 import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.WebDriver;
@@ -9,7 +9,7 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
-public class WebDriverSelector {
+public class DriverFactory {
     public enum BrowserType {
         CHROME, FIREFOX, EDGE
     }

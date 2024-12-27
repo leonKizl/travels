@@ -41,13 +41,13 @@ public class HotelSearchhPage {
     @FindBy(xpath = "//a[text()='  Sign Up']")
     private List<WebElement> signUpLink;
 
-    public HotelSearchhPage(WebDriver driver){
+    public HotelSearchhPage(WebDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(driver, this);
     }
 
 
-    public void setCity(String cityname){
+    public void setCity(String cityname) {
         searchHotelSpan.click();
         searchHotelInput.sendKeys(cityname);
         StringBuilder xpath = new StringBuilder("//span[text() = '" + cityname + "']");
@@ -55,26 +55,26 @@ public class HotelSearchhPage {
 
     }
 
-    public void setDates(String checkin,String checkout){
-       checkinInput.sendKeys(checkin);
-       checkoutInput.sendKeys(checkout);
+    public void setDates(String checkin, String checkout) {
+        checkinInput.sendKeys(checkin);
+        checkoutInput.sendKeys(checkout);
     }
 
-    public void setTravelers(int numbersOfAdultsToAdd,int numbersOfChildToAdd){
+    public void setTravelers(int numbersOfAdultsToAdd, int numbersOfChildToAdd) {
         travellersInput.click();
-        for (int i = 0; i < numbersOfAdultsToAdd; i++ ){
+        for (int i = 0; i < numbersOfAdultsToAdd; i++) {
             adultPlusBtn.click();
         }
-        for (int i = 0; i < numbersOfChildToAdd; i++){
+        for (int i = 0; i < numbersOfChildToAdd; i++) {
             childPlusBtn.click();
         }
     }
 
-    public void performSearch(){
+    public void performSearch() {
         searchButton.click();
     }
 
-    public void openSignUpForm(){
+    public void openSignUpForm() {
         myAccountLink.stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         signUpLink.stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
     }
