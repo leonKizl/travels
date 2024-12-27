@@ -1,5 +1,6 @@
 package Pages;
 
+import model.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -70,5 +71,14 @@ public class SignUpPage {
 
     public void SignUp(){
        signUpButton.click();
+    }
+    public void userSignUp(User user){
+        setFirstName(user.getFirstName());
+        setLastName(user.getLastName());
+        setPhone(user.getPhone());
+        setEmail(user.getEmail());
+        setPassword(user.getPassword());
+        setConfirmPassword(user.getPassword());
+        SignUp();
     }
 }
