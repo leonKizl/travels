@@ -1,5 +1,6 @@
 package Pages;
 
+import Utils.SeleniumHelper;
 import model.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -35,12 +36,18 @@ public class SignUpPage {
     @FindBy(css = "div.alert-danger > p")
     private List<WebElement> alertsList;
 
-    public List<String> GetAlertsMessages() {
-        return alertsList.stream().map(el -> el.getText()).collect(Collectors.toList());
-    }
+    private WebDriver driver;
+
+
 
     public SignUpPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
+        this.driver = driver;
+    }
+
+    public List<String> GetAlertsMessages() {
+        SeleniumHelper.waitForNotEmptyList(driver,By.cssSelector("div.alert-danger > p"));
+        return alertsList.stream().map(el -> el.getText()).collect(Collectors.toList());
     }
 
     public void setFirstName(String firstname) {

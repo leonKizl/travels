@@ -69,10 +69,10 @@ public class SighnUpTest extends BaseTest {
         Wlad.setFirstName("Wlad");
         Wlad.setEmail("Wlasefd@mail.ru");
         Wlad.setPhone("343242442");
-        Wlad.setLastName("Hodas");
         Wlad.setPassword("Testowanie!!!!!!");
+        Wlad.setLastName(" ");
         signUpPage.userSignUp(Wlad);
-        Assert.assertTrue(signUpPage.GetAlertsMessages().contains("Email Already Exists."));
+        Assert.assertTrue(signUpPage.GetAlertsMessages().contains("The Last Name field is required."));
 
     }
 
@@ -81,7 +81,7 @@ public class SighnUpTest extends BaseTest {
         HotelSearchhPage hotelSearchhPage = new HotelSearchhPage(driver);
         hotelSearchhPage.openSignUpForm();
         SignUpPage signUpPage = new SignUpPage(driver);
-        User Kirill = new User("Kirill", "Hodarkowski", "6666666", "92837437jhgjhggjgh", "kjksfesefssfkj@mail.ru");
+        User Kirill = new User("Kirill", "Hodarkowski", "6666666", "92837sef437jhgjhggjgh", "kjksseffessefssfkj@mail.ru");
         signUpPage.userSignUp(Kirill);
         LoggedUserPage loggedUserPage = new LoggedUserPage(driver);
         Assert.assertTrue(loggedUserPage.getUserNameHeading().contains(Kirill.getLastName()));

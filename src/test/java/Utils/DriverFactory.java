@@ -9,28 +9,24 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import java.io.IOException;
+
 public class DriverFactory {
-    public enum BrowserType {
-        CHROME, FIREFOX, EDGE
-    }
-
-    public static WebDriver getDriver(BrowserType browser) {
+    public static WebDriver getDriver() throws IOException {
+        String name = PropertiesLoader.loadProperty("browser.name");
         String driverPath = System.getProperty("webdriver.driver.path", "C:\\Users\\leoni\\OneDrive\\Рабочий стол\\instalators\\drivers\\");
-        switch (browser) {
-            case CHROME:
-                setDriverPath("webdriver.chrome.driver", driverPath + "chromedriver.exe");
-                return new ChromeDriver(getChromeOptions());
-            case FIREFOX:
-                setDriverPath("webdriver.gecko.driver", driverPath + "geckodriver.exe");
-                return new FirefoxDriver(getFirefoxOptions());
-            case EDGE:
-                setDriverPath("webdriver.edge.driver", driverPath + "msedgedriver.exe");
-                return new EdgeDriver(getEdgeOptions());
-            default:
-                throw new InvalidArgumentException("Unsupported browser: " + browser);
+        if (name.equals("firefox")) {
+            setDriverPath("webdriver.gecko.driver", driverPath + "geckodriver.exe");
+            return new FirefoxDriver(getFirefoxOptions());
+        } else if (name.equals("chrome")) {
+            setDriverPath("webdriver.chrome.driver", driverPath + "chromedriver.exe");
+            return new ChromeDriver(getChromeOptions());
+        } else if (name.equals("edge")) {
+            setDriverPath("webdriver.edge.driver", driverPath + "msedgedriver.exe");
+            return new EdgeDriver(getEdgeOptions());
         }
+        throw new InvalidArgumentException("Unsupported browser: " + name);
     }
-
     private static void setDriverPath(String driverName, String driverPath) {
         System.setProperty(driverName, driverPath);
     }
